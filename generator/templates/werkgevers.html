@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>{{TITLE}} | Werkgevers Platform NL</title>
+  <style>
+    body { font-family: "Trebuchet MS", sans-serif; max-width: 920px; margin: 0 auto; padding: 20px; }
+    header { background: #1a3c5e; color: white; padding: 15px 25px; }
+    header h1 { margin: 0; font-size: 1.5em; }
+    nav a { color: #ccc; margin-right: 15px; text-decoration: none; font-size: 0.85em; }
+    .content { padding: 20px 0; }
+    .documenten { margin-top: 20px; background: #f5f8fb; padding: 15px; border: 1px solid #d0dce8; }
+    .documenten a { color: #1a3c5e; display: block; padding: 4px 0; }
+    footer { font-size: 0.8em; color: #777; border-top: 1px solid #ddd; margin-top: 30px; padding-top: 10px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Werkgevers Platform NL</h1>
+    <nav><a href="#">Home</a> <a href="#">CAO-tools</a> <a href="#">Documenten</a> <a href="#">Contact</a></nav>
+  </header>
+  <div class="content">
+    <h2>{{TITLE}}</h2>
+    {{BODY}}
+    {{ARTICLES_LIST}}
+  </div>
+  <footer>&copy; {{FOOTER_YEAR}} Werkgevers Platform NL</footer>
+</body>
+</html>

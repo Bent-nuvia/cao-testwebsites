@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>{{TITLE}} | Loondienst Nieuws</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 920px; margin: 0 auto; padding: 0; }
+    header { background: #e8380d; color: white; padding: 12px 20px; }
+    header h1 { margin: 0; font-size: 1.5em; }
+    .cookiebanner { background: #333; color: #eee; padding: 10px 20px; font-size: 0.85em; display: flex; justify-content: space-between; align-items: center; }
+    .cookiebanner button { background: #e8380d; color: white; border: none; padding: 5px 12px; cursor: pointer; border-radius: 3px; }
+    nav { background: #f5f5f5; padding: 8px 20px; border-bottom: 1px solid #ddd; }
+    nav a { color: #333; margin-right: 15px; font-size: 0.9em; text-decoration: none; }
+    main { padding: 20px; }
+    .artikel-lijst a { display: block; padding: 8px 0; border-bottom: 1px solid #eee; color: #e8380d; }
+    footer { background: #222; color: #888; font-size: 0.8em; padding: 15px 20px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  {{COOKIEBANNER}}
+  <header><h1>Loondienst Nieuws</h1></header>
+  <nav><a href="#">Nieuws</a> <a href="#">Cao</a> <a href="#">Salaris</a> <a href="#">Werken</a></nav>
+  <main>
+    <h2>{{TITLE}}</h2>
+    {{BODY}}
+    <div class="artikel-lijst">{{ARTICLES_LIST}}</div>
+  </main>
+  <footer>&copy; {{FOOTER_YEAR}} Loondienst Nieuws</footer>
+</body>
+</html>

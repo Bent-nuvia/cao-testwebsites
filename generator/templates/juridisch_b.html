@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>{{TITLE}} | Arbeidsrecht Updates</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: "Segoe UI", Tahoma, sans-serif; margin: 0; background: #1e2a3a; color: #eee; }
+    header { background: #2c3e50; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { margin: 0; font-size: 1.4em; color: #f1c40f; }
+    nav a { color: #aaa; margin-left: 20px; text-decoration: none; font-size: 0.85em; }
+    main { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+    .card { background: #2c3e50; padding: 20px; border-radius: 6px; margin-bottom: 15px; }
+    .card h2 { color: #f1c40f; margin-top: 0; }
+    .artikel-lijst a { display: block; padding: 6px 0; border-bottom: 1px solid #3d5166; color: #7fb3d3; }
+    footer { text-align: center; padding: 20px; font-size: 0.75em; color: #555; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Arbeidsrecht Updates</h1>
+    <nav><a href="#">Jurisprudentie</a> <a href="#">Wetgeving</a> <a href="#">CAO-recht</a></nav>
+  </header>
+  <main>
+    <div class="card">
+      <h2>{{TITLE}}</h2>
+      {{BODY}}
+      <div class="artikel-lijst">{{ARTICLES_LIST}}</div>
+    </div>
+  </main>
+  <footer>&copy; {{FOOTER_YEAR}} Arbeidsrecht Updates</footer>
+</body>
+</html>

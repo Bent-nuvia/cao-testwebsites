@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>{{TITLE}} | Zorg & Welzijn Nieuws</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; background: #f9f9f9; }
+    header { background: #00857c; color: white; padding: 15px 20px; border-radius: 4px 4px 0 0; }
+    header h1 { margin: 0; }
+    main { background: white; padding: 20px; border: 1px solid #ddd; }
+    .pdf-sectie { margin-top: 20px; padding: 15px; background: #f0faf9; border-left: 4px solid #00857c; }
+    .pdf-sectie a { color: #00857c; }
+    footer { font-size: 0.8em; color: #888; margin-top: 15px; }
+    details { margin-top: 30px; padding: 10px; background: #fafafa; border: 1px solid #eee; }
+    details summary { cursor: pointer; color: #666; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <header><h1>Zorg &amp; Welzijn Nieuws</h1></header>
+  <main>
+    <h2>{{TITLE}}</h2>
+    {{BODY}}
+    {{ARTICLES_LIST}}
+  </main>
+  <footer>&copy; {{FOOTER_YEAR}} Zorg &amp; Welzijn Nieuws</footer>
+</body>
+</html>
