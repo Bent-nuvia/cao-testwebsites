@@ -1,0 +1,47 @@
+{
+  "vakbond-nieuws": {
+    "type": "artikel",
+    "stijl": "vakbond",
+    "monitor_url": "https://<gebruikersnaam>.github.io/cao-testwebsites/sites/vakbond-nieuws/",
+    "relevantie_kans": 0.6,
+    "edge_cases": ["korte_slug", "anker_url", "cacao_false_positive"]
+  },
+  "overheid-arbeidsmarkt": {
+    "type": "artikel",
+    "stijl": "overheid",
+    "monitor_url": "https://<gebruikersnaam>.github.io/cao-testwebsites/sites/overheid-arbeidsmarkt/",
+    "relevantie_kans": 0.5,
+    "edge_cases": ["pagina_url", "relevant_zonder_cao_woord", "noindex_tag"]
+  },
+  "hr-magazine": {
+    "type": "artikel",
+    "stijl": "hr-magazine",
+    "monitor_url": "https://<gebruikersnaam>.github.io/cao-testwebsites/sites/hr-magazine/",
+    "relevantie_kans": 0.4,
+    "edge_cases": ["teruggedateerd", "oud_nieuws_herplaatst", "artikel_verdwijnt"]
+  },
+  "sector-zorg": {
+    "type": "pdf",
+    "stijl": "sector",
+    "monitor_url": "https://<gebruikersnaam>.github.io/cao-testwebsites/sites/sector-zorg/",
+    "edge_cases": ["zelfde_url_nieuwe_inhoud", "diep_verstopt"]
+  },
+  "werkgevers-platform": {
+    "type": "pdf",
+    "stijl": "werkgevers",
+    "monitor_url": "https://<gebruikersnaam>.github.io/cao-testwebsites/sites/werkgevers-platform/",
+    "edge_cases": ["korte_pdf_naam", "pdf_verdwijnt_nieuwe_naam"]
+  },
+  "arbeidsrecht-updates": {
+    "type": "pagina",
+    "stijl": "juridisch",
+    "monitor_url": "https://<gebruikersnaam>.github.io/cao-testwebsites/sites/arbeidsrecht-updates/",
+    "edge_cases": ["alleen_footer", "typofout", "grote_redesign"]
+  },
+  "loondienst-nieuws": {
+    "type": "pagina",
+    "stijl": "nieuws",
+    "monitor_url": "https://<gebruikersnaam>.github.io/cao-testwebsites/sites/loondienst-nieuws/",
+    "edge_cases": ["cookiebanner_wissel", "content_zonder_url"]
+  }
+}
