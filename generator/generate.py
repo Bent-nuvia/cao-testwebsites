@@ -171,20 +171,24 @@ def generate_artikel_site(site_name: str, site_config: dict, state: dict) -> Non
         add_article_link_to_index(index_path, f"artikelen/{filename}", title)
         print(f"  Artikel (onzin): {filename}")
 
-    sectoren = [
-        "metaal en techniek", "bouw en infra", "primair onderwijs", "voortgezet onderwijs",
-        "MBO", "HBO", "verpleging verzorging en thuiszorg", "ziekenhuizen", "GGZ",
-        "supermarkten en detailhandel", "transport en logistiek", "horeca",
-        "rijksambtenaren", "gemeenten", "schoonmaak", "ICT en automatisering",
-        "financiële dienstverlening", "banken", "verzekeraars", "architectenbureaus",
-        "grafimedia", "uitzendbranche", "beveiliging", "kinderopvang", "welzijn",
+    # Exacte CAO-namen die de monitor moet oppikken
+    cao_namen_relevant = [
+        "CAO VVT", "CAO GGZ", "CAO Ambulancezorg", "CAO Ziekenhuizen",
+        "CAO Jeugdzorg", "CAO Gehandicaptenzorg",
+    ]
+
+    # CAO's die lijken op zorg maar niet gemonitord zijn — test false positives
+    cao_namen_edge = [
+        "CAO Kraamzorg", "CAO Thuiszorg", "CAO Schoonmaak", "CAO Welzijn",
+        "CAO Kinderopvang", "CAO Huisartsenzorg", "CAO Tandheelkunde",
+        "CAO Apothekers", "CAO Fysiotherapie", "CAO Geestelijke Gezondheidszorg particulier",
     ]
 
     if relevant:
-        sector = random.choice(sectoren)
+        cao_naam = random.choice(cao_namen_relevant)
         cao_prompt = (
             f"Schrijf een kort nieuwsartikel (3-4 alinea's) in het Nederlands over een recente "
-            f"ontwikkeling in de CAO-onderhandeling voor de sector {sector}. "
+            f"ontwikkeling in de {cao_naam}-onderhandeling. Noem de exacte naam '{cao_naam}' meerdere keren. "
             f"Schrijf alleen <p>-tags."
         )
         body = call_claude(cao_prompt)
@@ -218,13 +222,28 @@ def generate_artikel_site(site_name: str, site_config: dict, state: dict) -> Non
         print(f"    -> Anker URL: artikelen/{filename}#arbeidsmarkt")
 
     elif edge_case == "cacao_false_positive":
-        prompt = (
-            "Schrijf een kort nieuwsartikel (2 alinea's) in het Nederlands over de wereldwijde "
-            "cacaoproductie en chocolade-industrie. Noem het woord 'cacao' meerdere keren. "
-            "Schrijf alleen <p>-tags."
-        )
+        edge_cao = random.choice(cao_namen_edge)
+        false_positive_opties = [
+            (
+                "Schrijf een kort nieuwsartikel (2 alinea's) in het Nederlands over de wereldwijde "
+                "cacaoproductie en chocolade-industrie. Noem het woord 'cacao' meerdere keren. "
+                "Schrijf alleen <p>-tags.",
+                "Cacao-productie bereikt recordhoogte in 2026"
+            ),
+            (
+                f"Schrijf een kort nieuwsartikel (2 alinea's) in het Nederlands over arbeidsomstandigheden "
+                f"in de {edge_cao}-sector. Noem geen exacte CAO-afspraken. Schrijf alleen <p>-tags.",
+                f"Arbeidsomstandigheden in de {edge_cao.replace('CAO ', '')}-sector onder de loep"
+            ),
+            (
+                f"Schrijf een kort nieuwsartikel (2 alinea's) in het Nederlands over een loonsverhoging "
+                f"in de {edge_cao}-sector zonder te vermelden dat er een CAO-onderhandeling speelt. "
+                f"Schrijf alleen <p>-tags.",
+                f"Lonen stijgen in {edge_cao.replace('CAO ', '')}"
+            ),
+        ]
+        prompt, title = random.choice(false_positive_opties)
         body = call_claude(prompt)
-        title = "Cacao-productie bereikt recordhoogte in 2026"
         filename = make_article_filename(title)
         html = render_article_html(title, body)
         (artikelen_dir / filename).write_text(html, encoding="utf-8")
@@ -241,11 +260,13 @@ def generate_artikel_site(site_name: str, site_config: dict, state: dict) -> Non
         print("    -> Paginering URL: pagina/3/")
 
     elif edge_case == "relevant_zonder_cao_woord":
-        sector = random.choice(sectoren)
+        cao_naam = random.choice(cao_namen_relevant)
+        sector = cao_naam.replace("CAO ", "")
         prompt = (
             f"Schrijf een kort nieuwsartikel (3 alinea's) in het Nederlands over nieuwe arbeidsvoorwaarden "
-            f"of een loonsverhoging voor werknemers in de sector {sector}. "
-            f"Vermijd het woord 'CAO' volledig. Schrijf alleen <p>-tags."
+            f"of een loonsverhoging voor werknemers in de {sector}-sector. "
+            f"Vermijd het woord 'CAO' volledig maar maak duidelijk dat het over arbeidsafspraken gaat. "
+            f"Schrijf alleen <p>-tags."
         )
         body = call_claude(prompt)
         title = "Werknemers krijgen 5 procent loonsverhoging"
