@@ -171,11 +171,21 @@ def generate_artikel_site(site_name: str, site_config: dict, state: dict) -> Non
         add_article_link_to_index(index_path, f"artikelen/{filename}", title)
         print(f"  Artikel (onzin): {filename}")
 
+    sectoren = [
+        "metaal en techniek", "bouw en infra", "primair onderwijs", "voortgezet onderwijs",
+        "MBO", "HBO", "verpleging verzorging en thuiszorg", "ziekenhuizen", "GGZ",
+        "supermarkten en detailhandel", "transport en logistiek", "horeca",
+        "rijksambtenaren", "gemeenten", "schoonmaak", "ICT en automatisering",
+        "financiële dienstverlening", "banken", "verzekeraars", "architectenbureaus",
+        "grafimedia", "uitzendbranche", "beveiliging", "kinderopvang", "welzijn",
+    ]
+
     if relevant:
+        sector = random.choice(sectoren)
         cao_prompt = (
-            "Schrijf een kort nieuwsartikel (3-4 alinea's) in het Nederlands over een recente "
-            "ontwikkeling in een Nederlandse CAO-onderhandeling. Noem een specifieke sector "
-            "(bijv. metaal, zorg, onderwijs). Schrijf alleen <p>-tags."
+            f"Schrijf een kort nieuwsartikel (3-4 alinea's) in het Nederlands over een recente "
+            f"ontwikkeling in de CAO-onderhandeling voor de sector {sector}. "
+            f"Schrijf alleen <p>-tags."
         )
         body = call_claude(cao_prompt)
         title = "CAO-update: nieuwe afspraken in zicht"
@@ -231,10 +241,11 @@ def generate_artikel_site(site_name: str, site_config: dict, state: dict) -> Non
         print("    -> Paginering URL: pagina/3/")
 
     elif edge_case == "relevant_zonder_cao_woord":
+        sector = random.choice(sectoren)
         prompt = (
-            "Schrijf een kort nieuwsartikel (3 alinea's) in het Nederlands over een loonsverhoging "
-            "van 5% voor werknemers in een specifieke sector. Vermijd het woord 'CAO' volledig. "
-            "Schrijf alleen <p>-tags."
+            f"Schrijf een kort nieuwsartikel (3 alinea's) in het Nederlands over nieuwe arbeidsvoorwaarden "
+            f"of een loonsverhoging voor werknemers in de sector {sector}. "
+            f"Vermijd het woord 'CAO' volledig. Schrijf alleen <p>-tags."
         )
         body = call_claude(prompt)
         title = "Werknemers krijgen 5 procent loonsverhoging"
@@ -245,12 +256,13 @@ def generate_artikel_site(site_name: str, site_config: dict, state: dict) -> Non
         print(f"    -> Relevant zonder CAO-woord: {filename}")
 
     elif edge_case == "noindex_tag":
+        sector = random.choice(sectoren)
         prompt = (
-            "Schrijf een kort nieuwsartikel (2 alinea's) in het Nederlands over een nieuwe "
-            "CAO-afspraak. Schrijf alleen <p>-tags."
+            f"Schrijf een kort nieuwsartikel (2 alinea's) in het Nederlands over een nieuwe "
+            f"CAO-afspraak in de sector {sector}. Schrijf alleen <p>-tags."
         )
         body = call_claude(prompt)
-        title = "Nieuwe CAO-afspraak — noindex test"
+        title = f"Nieuwe CAO-afspraak {sector} — noindex test"
         filename = make_article_filename(title)
         html = render_article_html(title, body, noindex=True)
         (artikelen_dir / filename).write_text(html, encoding="utf-8")
@@ -324,10 +336,16 @@ def generate_pdf_site(site_name: str, site_config: dict, state: dict) -> None:
     edge_case = get_active_edge_case(site_config)
     print(f"  Edge case: {edge_case}")
 
+    pdf_sectoren = [
+        "metaal en techniek", "bouw", "onderwijs", "zorg", "retail",
+        "transport", "horeca", "gemeenten", "schoonmaak", "kinderopvang",
+    ]
+
     if edge_case == "zelfde_url_nieuwe_inhoud":
+        sector = random.choice(pdf_sectoren)
         prompt = (
-            "Schrijf een kort stuk nep-CAO-tekst (3-4 regels) voor de zorgsector, in het Nederlands. "
-            "Vermeld de huidige datum in de tekst."
+            f"Schrijf een kort stuk nep-CAO-tekst (3-4 regels) voor de sector {sector}, in het Nederlands. "
+            f"Vermeld de huidige datum in de tekst."
         )
         content = call_claude(prompt)
         pdf_path = docs_dir / "cao-zorg-actueel.pdf"
