@@ -1,0 +1,38 @@
+name: Genereer dagelijkse content
+
+on:
+  schedule:
+    - cron: "0 6 * * *"   # Dagelijks om 06:00 UTC
+  workflow_dispatch:       # Handmatig triggeren mogelijk
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Zet Python op
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installeer dependencies
+        run: pip install anthropic
+
+      - name: Genereer content
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python generator/generate.py
+
+      - name: Commit en push wijzigingen
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sites/ generator/state.json generator/archive/
+          git diff --staged --quiet || git commit -m "chore: dagelijkse content update $(date -u +%Y-%m-%d)"
+          git push
